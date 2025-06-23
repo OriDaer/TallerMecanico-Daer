@@ -1,0 +1,80 @@
+db grande 
+CREATE DATABASE IF NOT EXISTS taller_mecanico;
+USE taller_mecanico;
+
+CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    dni VARCHAR(20),
+    telefono VARCHAR(20),
+    direccion VARCHAR(200)
+);
+
+CREATE TABLE empleados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    dni VARCHAR(20),
+    puesto VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+CREATE TABLE proveedores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_empresa VARCHAR(100),
+    contacto VARCHAR(100),
+    telefono VARCHAR(20),
+    direccion VARCHAR(200)
+);
+
+CREATE TABLE repuestos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    marca VARCHAR(100),
+    precio DECIMAL(10,2),
+    stock INT
+);
+
+CREATE TABLE rodados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    marca VARCHAR(100),
+    modelo VARCHAR(100),
+    anio INT,
+    patente VARCHAR(20),
+    id_cliente INT,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+);
+
+CREATE TABLE ficha_tecnica (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_rodado INT,
+    descripcion TEXT,
+    fecha DATE,
+    FOREIGN KEY (id_rodado) REFERENCES rodados(id)
+);
+
+CREATE TABLE facturacion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT,
+    monto_total DECIMAL(10,2),
+    fecha DATE,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+);
+
+CREATE TABLE presupuesto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT,
+    detalle TEXT,
+    monto_estimado DECIMAL(10,2),
+    fecha DATE,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+);
+select apellido,nombre,puesto as PUESTO  from empleados;
+select * from clientes;
+select dni as DNI,concat(apellido,', ',nombre) as 'Nombre completo' from clientes;
+select dni,apellido, nombre from clientes order by apellido desc;
+select * from empleados limit 4;
+select * from rodados;
+select id_cliente, modelo from rodados where (marca="fiat" or marca = "jeep") and anio= 2008 order by patente asc;
+select *from reparaciones where (re_mec=5 or rep_mec=8)order by fecha_rep desc limit 8 
