@@ -1,0 +1,25 @@
+classDiagram
+class Persona{
+    dni:int (PK)
+    apellido: varchar(50)
+    nombre: varchar(50)
+    direccion: varchar(50)
+    telefono: int
+}
+class Empleado{
+    legajo:int (PK)
+    dni: int (FK)
+    cod_funcion: int (FK)
+    set_legajo()
+    get_legajo()
+    set_dni()
+
+}
+class Funcion{
+    cod_funcion: int(PK)
+    descripcion: varchar(30)
+}
+%% asociacion
+Persona--|> Empleado 
+%%dependencia
+Funcion --> Empleado
